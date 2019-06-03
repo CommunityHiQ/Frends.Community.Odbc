@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>FRENDS ODBC task</Description>
-    <Version>0.0.1</Version>
+    <Version>0.0.6</Version>
     <PackageId>Frends.Community.Odbc</PackageId>
     <Authors>HiQ Finland</Authors>
     <Product>Frends.Community.Odbc</Product>

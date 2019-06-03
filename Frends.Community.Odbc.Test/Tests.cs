@@ -20,11 +20,18 @@ namespace Frends.Community.Odbc.Test
             {
                 Query = "SELECT Animal FROM AnimalTypes WHERE Animal = ? OR Animal = ?",
                 ParametersInOrder = new[] { new QueryParameter { Value = "Bear" }, new QueryParameter { Value = "Moose" } },
-                RootElementName = "ROW",
-                RowElementName = "ROWSET",
-                ReturnType = QueryReturnType.Xml
             };
-            var resultTask = OdbcTask.Query(odbcQuery, conn, new CancellationToken());
+
+            var output = new OutputProperties
+            {
+                ReturnType = QueryReturnType.Xml,
+                XmlOutput = new XmlOutputProperties
+                {
+                    RootElementName = "ROW",
+                    RowElementName = "ROWSET",
+                }
+            };
+            var resultTask = OdbcTask.Query(odbcQuery, output, conn, new CancellationToken());
 
             resultTask.Wait();
             var result = (string)resultTask.Result;

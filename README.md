@@ -7,6 +7,7 @@
       - [Input](#input)
       - [Options](#options)
       - [Result](#result)
+  - [Change Log](#change-log)
   - [License](#license)
 
 # Frends.Community.Odbc
@@ -68,17 +69,46 @@ Query ODBC
 | Property                | Type           | Description                                    | Example                  |
 |-------------------------|----------------|------------------------------------------------|--------------------------|
 | Query					  | string         | Qyery string			 | SELECT * FROM Customers WHERE Id = ? |
-| ReturnType			  | enum           | Specify return type		 | Xml, Json, Dynamic  |
-| RootElementName		  | string         | If using xml return type this is the output root			 | ROWSET |
-| RowElementName		  | string         | If using xml return type this is the output for row elemtnts			 | ROW |
 | ParametersInOrder		  | List<QueryParameter>      | List of parameters used in query in order of usage			 |  |
 
+#### Output
+| Property    | Type       | Description     | Example |
+| ------------| -----------| --------------- | ------- |
+| Return type | enum<Json, Xml, Csv> | Data return type format | `Json` |
+| OutputToFile | bool | true to write results to a file, false to return results to executin process | `true` |
+
+##### Xml Output
+| Property    | Type       | Description     | Example |
+| ------------| -----------| --------------- | ------- |
+| RootElementName | string | Xml root element name | `items` |
+| RowElementName |string | Xml row element name | `item` |
+
+##### Json Output
+| Property    | Type       | Description     | Example |
+| ------------| -----------| --------------- | ------- |
+| Culture info | string | Specify the culture info to be used when parsing result to JSON. If this is left empty InvariantCulture will be used. [List of cultures](https://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx) Use the Language Culture Name. | `fi-FI` |
+
+##### Csv Output
+| Property    | Type       | Description     | Example |
+| ------------| -----------| --------------- | ------- |
+| IncludeHeaders | bool | Include field names in the first row | `true` |
+| CsvSeparator | string | Csv separator to use in headers and data items | `;` |
+
+##### Output File
+| Property    | Type       | Description     | Example |
+| ------------| -----------| --------------- | ------- |
+| Path | string | Output path with file name | `c:\temp\output.json` |
+| Encoding | string | Encoding to use for the output file | `utf-8` |
+
 #### Result
-Result [ Dynamic (JToken / string) ]
+Object { string Result }
 
 
-#### Result
+## Change Log
 
+| Version | Changes |
+| ----- | ----- |
+| 1.0.0 | Initial version of Query Task |
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details
