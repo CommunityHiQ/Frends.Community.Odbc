@@ -94,7 +94,7 @@ Query ODBC
 | Property    | Type       | Description     | Example |
 | ------------| -----------| --------------- | ------- |
 | IncludeHeaders | bool | Include field names in the first row | `true` |
-| CsvSeparator | string | Csv separator to use in headers and data items | `;` |
+| CsvSeparator | string | Csv separator to use in headers and data items. Note that if you want tu use tabulator as a separator, you need to change the parameter type to expression and specify tabulator by @"	" (note the tabulator between quotes) or "\u0009".  | `;` |
 
 ##### Output File
 | Property    | Type       | Description     | Example |
