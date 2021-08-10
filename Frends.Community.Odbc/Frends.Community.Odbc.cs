@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Frends.Community.Odbc
 {
-    public class OdbcTask
+    public static class OdbcTask
     {
         /// <summary>
         /// ODBC query task

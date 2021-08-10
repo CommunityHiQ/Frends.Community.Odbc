@@ -1,0 +1,40 @@
+name: PackAndPushAfterMerge
+
+on:
+  push:
+    branches:    
+      - master
+
+jobs:
+  build:
+    name: ReleaseTheTask
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Get version number
+      id: vars
+      shell: pwsh
+      run: |
+        $version = ([xml]($tmp = Get-Content -Path 'Frends.Community.Odbc/Frends.Community.Odbc.csproj')).SelectSingleNode("Project/PropertyGroup/Version").InnerText
+        echo "::set-output name=version_number::$version"
+
+    - name: Pack release version of task
+      run: dotnet pack --configuration Release --include-source 
+      
+    - name: Push NuGet package to the (prod) feed
+      run: dotnet nuget push Frends.Community.Odbc\bin\Release\Frends.Community.Odbc.*.nupkg --api-key ${{ secrets.COMMUNITY_FEED_API_KEY }} --source https://www.myget.org/F/frends-community/api/v2/package --symbol-source https://www.myget.org/F/frends-community/symbols/api/v2/package
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.vars.outputs.version_number }}
+        release_name: Release ${{ steps.vars.outputs.version_number }}
+        body: |
+          You can install the task via frends UI Task View or you can find the NuGet package from https://www.myget.org/F/frends-community/api/v2/package/Frends.Community.Odbc/${{ steps.vars.outputs.version_number }}
+        draft: false
+        prerelease: false

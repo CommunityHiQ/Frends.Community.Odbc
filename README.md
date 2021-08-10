@@ -1,63 +1,28 @@
-- [Frends.Community.Odbc](#frendscommunityodbc)
-  - [Installing](#installing)
-  - [Building](#building)
-  - [Contributing](#contributing)
-  - [Documentation](#documentation)
-    - [Query](#query)
-      - [Input](#input)
-      - [Options](#options)
-      - [Result](#result)
-  - [Change Log](#change-log)
-  - [License](#license)
-
 # Frends.Community.Odbc
 
 This task requires ODBC drivers to be istalled on FRENDS Agent machine. 
 
-## Installing
-You can install the task via FRENDS UI Task view, by searching for packages. You can also download the latest NuGet package from https://www.myget.org/feed/frends/package/nuget/Frends.Community.Odbc and import it manually via the Task view.
+[![Actions Status](https://github.com/CommunityHiQ/Frends.Community.Odbc/workflows/PackAndPushAfterMerge/badge.svg)](https://github.com/CommunityHiQ/Frends.Community.Odbc/actions) ![MyGet](https://img.shields.io/myget/frends-community/v/Frends.Community.Odbc) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
-## Building
-Requirements
+- [Installing](#installing)
+- [Tasks](#tasks)
+     - [OdbcTask](#OdbcTask)
+- [Building](#building)
+- [Contributing](#contributing)
+- [Change Log](#change-log)
 
-`NET Core SDK 2.1 or later`
+# Installing
 
-Clone a copy of the repo
+You can install the Task via frends UI Task View or you can find the NuGet package from the following NuGet feed
+https://www.myget.org/F/frends-community/api/v3/index.json and in Gallery view in MyGet https://www.myget.org/feed/frends-community/package/nuget/Frends.Community.Odbc
 
-`git clone https://github.com/CommunityHiQ/Frends.Community.Odbc.git`
+# Tasks
 
-Restore dependencies
-
-`dotnet restore`
-
-Build the solution
-
-`dotnet build`
-
-Run Tests
-
-`dotnet test Frends.Community.Odbc.Test`
-
-Create a nuget package
-
-`dotnet pack Frends.Community.Odbc`
-
-## Contributing
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
-
-1. Fork the repo on GitHub
-2. Clone the project to your own machine
-3. Commit changes to your own branch
-4. Push your work back up to your fork
-5. Submit a Pull request so that we can review your changes
-
-NOTE: Be sure to merge the latest from "upstream" before making a pull request!
-
-## Documentation
-
-### Query 
+## OdbcTask
 
 Query ODBC
+
+### Properties
 
 #### ConnectionInformation
 
@@ -102,15 +67,54 @@ Query ODBC
 | Path | string | Output path with file name | `c:\temp\output.json` |
 | Encoding | string | Encoding to use for the output file | `utf-8` |
 
-#### Result
+### Options
+
+
+### Returns
+
 Object { string Result }
 
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Result | `string` | Output file path or query result | `c:\temp\output.json` |
 
-## Change Log
+Usage:
+To fetch result use syntax:
+
+`#result.Replication`
+
+# Building
+
+Clone a copy of the repository
+
+`git clone https://github.com/CommunityHiQ/Frends.Community.Odbc.git`
+
+Rebuild the project
+
+`dotnet build`
+
+Run tests
+
+`dotnet test`
+
+Create a NuGet package
+
+`dotnet pack --configuration Release`
+
+# Contributing
+When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
+
+1. Fork the repository on GitHub
+2. Clone the project to your own machine
+3. Commit changes to your own branch
+4. Push your work back up to your fork
+5. Submit a Pull request so that we can review your changes
+
+NOTE: Be sure to merge the latest from "upstream" before making a pull request!
+
+# Change Log
 
 | Version | Changes |
 | ----- | ----- |
 | 1.0.0 | Initial version of Query Task |
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details
+| 1.0.1 | Multitargeting .netstandard 2.0, .net 471 |
