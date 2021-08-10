@@ -117,4 +117,4 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 | Version | Changes |
 | ----- | ----- |
 | 1.0.0 | Initial version of Query Task |
-| 1.0.1 | Multitargeting .netstandard 2.0, .net 471 |
+| 1.0.1 | Multitargeting .net standard 2.0, .net 471 |
