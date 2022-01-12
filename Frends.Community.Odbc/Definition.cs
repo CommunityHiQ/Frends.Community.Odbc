@@ -1,12 +1,12 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿#pragma warning disable 1591
 
-#pragma warning disable 1591
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Frends.Community.Odbc
 {
     /// <summary>
-    /// Return type
+    /// Return type.
     /// </summary>
     public enum QueryReturnType { Csv, Json, Xml }
 
@@ -16,25 +16,25 @@ namespace Frends.Community.Odbc
     }
 
     /// <summary>
-    /// Connection information
+    /// Connection information.
     /// </summary>
     public class ConnectionInformation
     {
         /// <summary>
-        /// Connection string
+        /// Connection string.
         /// </summary>
         [PasswordPropertyText(true)]
         [DefaultValue("\"DSN=Access\"")]
         public string ConnectionString { get; set; }
 
         /// <summary>
-        /// Timeout
+        /// Timeout.
         /// </summary>
         [DefaultValue(30)] public int TimeoutSeconds { get; set; }
     }
 
     /// <summary>
-    /// Query ODBC
+    /// Query ODBC.
     /// </summary>
     [DisplayName("Query")]
     public class QueryParameters
@@ -43,7 +43,7 @@ namespace Frends.Community.Odbc
         public string Query { get; set; }
 
         /// <summary>
-        /// Parameters
+        /// Parameters.
         /// </summary>
         public QueryParameter[] ParametersInOrder { get; set; }
     }
@@ -54,49 +54,49 @@ namespace Frends.Community.Odbc
         public QueryReturnType ReturnType { get; set; }
 
         /// <summary>
-        /// Xml specific output properties
+        /// Xml specific output properties.
         /// </summary>
         [UIHint(nameof(ReturnType), "", QueryReturnType.Xml)]
         public XmlOutputProperties XmlOutput { get; set; }
 
         /// <summary>
-        /// Json specific output properties
+        /// Json specific output properties.
         /// </summary>
         [UIHint(nameof(ReturnType), "", QueryReturnType.Json)]
         public JsonOutputProperties JsonOutput { get; set; }
 
         /// <summary>
-        /// Csv specific output properties
+        /// Csv specific output properties.
         /// </summary>
         [UIHint(nameof(ReturnType), "", QueryReturnType.Csv)]
         public CsvOutputProperties CsvOutput { get; set; }
 
         /// <summary>
-        /// In case user wants to write results to a file instead of returning them to process
+        /// In case user wants to write results to a file instead of returning them to process.
         /// </summary>
         public bool OutputToFile { get; set; }
 
         /// <summary>
-        /// Output file properties
+        /// Output file properties.
         /// </summary>
         [UIHint(nameof(OutputToFile), "", true)]
         public OutputFileProperties OutputFile { get; set; }
     }
 
     /// <summary>
-    /// Xml output specific properties
+    /// Xml output specific properties.
     /// </summary>
     public class XmlOutputProperties
     {
         /// <summary>
-        /// Xml root element name
+        /// Xml root element name.
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]
         [DefaultValue("ROWSET")]
         public string RootElementName { get; set; }
 
         /// <summary>
-        /// Xml row element name
+        /// Xml row element name.
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]
         [DefaultValue("ROW")]
@@ -104,19 +104,22 @@ namespace Frends.Community.Odbc
     }
 
     /// <summary>
-    /// Json output specific properties
+    /// Json output specific properties.
     /// </summary>
     public class JsonOutputProperties
     {
         /// <summary>
-        /// Specify the culture info to be used when parsing result to JSON. If this is left empty InvariantCulture will be used. List of cultures: https://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx Use the Language Culture Name.
+        /// Specify the culture info to be used when parsing result to JSON.
+        /// If this is left empty InvariantCulture will be used.
+        /// List of cultures: https://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx
+        /// Use the Language Culture Name.
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]
         public string CultureInfo { get; set; }
     }
 
     /// <summary>
-    /// Csv output specific properties
+    /// Csv output specific properties.
     /// </summary>
     public class CsvOutputProperties
     {
@@ -126,7 +129,7 @@ namespace Frends.Community.Odbc
         public bool IncludeHeaders { get; set; }
 
         /// <summary>
-        /// Csv separator to use
+        /// Csv separator to use.
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]
         [DefaultValue(";")]
@@ -134,19 +137,19 @@ namespace Frends.Community.Odbc
     }
 
     /// <summary>
-    /// Properties for when user wants to write the result directly into a file
+    /// Properties for when user wants to write the result directly into a file.
     /// </summary>
     public class OutputFileProperties
     {
         /// <summary>
-        /// Query output filepath
+        /// Query output filepath.
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]
         [DefaultValue("c:\\temp\\output.csv")]
         public string Path { get; set; }
 
         /// <summary>
-        /// Output file encoding
+        /// Output file encoding.
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]
         [DefaultValue("utf-8")]
@@ -154,7 +157,7 @@ namespace Frends.Community.Odbc
     }
 
     /// <summary>
-    /// Result to be returned from task
+    /// Result to be returned from task.
     /// </summary>
     public class Output
     {

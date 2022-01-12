@@ -1,7 +1,7 @@
 ﻿{
-  "Tasks": [
-    {
-      "TaskMethod": "Frends.Community.Odbc.OdbcTask.Query"
-    }
-  ]
+	"Tasks": [
+		{
+			"TaskMethod": "Frends.Community.Odbc.OdbcTask.Query"
+		}
+	]
 }
