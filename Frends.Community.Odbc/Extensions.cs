@@ -13,7 +13,7 @@ namespace Frends.Community.Odbc
     static class Extensions
     {
         /// <summary>
-        /// Write query results to csv string or file
+        /// Write query results to csv string or file.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="output"></param>
@@ -21,7 +21,7 @@ namespace Frends.Community.Odbc
         /// <returns></returns>
         public static async Task<string> ToXmlAsync(this OdbcCommand command, OutputProperties output, CancellationToken cancellationToken)
         {
-            // utf-8 as default encoding
+            // UTF-8 as default encoding.
             var encoding = string.IsNullOrWhiteSpace(output.OutputFile?.Encoding) ? Encoding.UTF8 : Encoding.GetEncoding(output.OutputFile.Encoding);
 
             using (var writer = output.OutputToFile ? new StreamWriter(output.OutputFile.Path, false, encoding) : new StringWriter() as TextWriter)
@@ -34,7 +34,7 @@ namespace Frends.Community.Odbc
 
                     while (await reader.ReadAsync(cancellationToken))
                     {
-                        // single row element container
+                        // Single row element container.
                         await xmlWriter.WriteStartElementAsync("", output.XmlOutput.RowElementName, "");
 
                         for (int i = 0; i < reader.FieldCount; i++)
@@ -42,10 +42,10 @@ namespace Frends.Community.Odbc
                             await xmlWriter.WriteElementStringAsync("", reader.GetName(i), "", reader.GetValue(i).ToString());
                         }
 
-                        // close single row element container
+                        // Close single row element container.
                         await xmlWriter.WriteEndElementAsync();
 
-                        // write only complete elements, but stop if process was terminated
+                        // Write only complete elements, but stop if process was terminated.
                         cancellationToken.ThrowIfCancellationRequested();
                     }
 
@@ -58,7 +58,7 @@ namespace Frends.Community.Odbc
         }
 
         /// <summary>
-        /// Write query results to json string or file
+        /// Write query results to json string or file.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="output"></param>
@@ -70,41 +70,42 @@ namespace Frends.Community.Odbc
             {
                 var culture = string.IsNullOrWhiteSpace(output.JsonOutput.CultureInfo) ? CultureInfo.InvariantCulture : new CultureInfo(output.JsonOutput.CultureInfo);
 
-                // utf-8 as default encoding
+                // UTF-8 as default encoding.
                 var encoding = string.IsNullOrWhiteSpace(output.OutputFile?.Encoding) ? Encoding.UTF8 : Encoding.GetEncoding(output.OutputFile.Encoding);
 
-                // create json result
+                // Create json result.
                 using (var fileWriter = output.OutputToFile ? new StreamWriter(output.OutputFile.Path, false, encoding) : null)
                 using (var writer = output.OutputToFile ? new JsonTextWriter(fileWriter) : new JTokenWriter() as JsonWriter)
                 {
                     writer.Formatting = Newtonsoft.Json.Formatting.Indented;
                     writer.Culture = culture;
 
-                    // start array
+                    // Start array.
                     await writer.WriteStartArrayAsync(cancellationToken);
 
                     cancellationToken.ThrowIfCancellationRequested();
 
                     while (reader.Read())
                     {
-                        // start row object
+                        // Start row object.
                         await writer.WriteStartObjectAsync(cancellationToken);
 
                         for (var i = 0; i < reader.FieldCount; i++)
                         {
-                            // add row element name
+                            // Add row element name.
                             await writer.WritePropertyNameAsync(reader.GetName(i), cancellationToken);
                             await writer.WriteValueAsync(reader.GetValue(i) ?? string.Empty, cancellationToken);
 
                             cancellationToken.ThrowIfCancellationRequested();
                         }
 
-                        await writer.WriteEndObjectAsync(cancellationToken); // end row object
+                        // End row object.
+                        await writer.WriteEndObjectAsync(cancellationToken);
 
                         cancellationToken.ThrowIfCancellationRequested();
                     }
 
-                    // end array
+                    // End array.
                     await writer.WriteEndArrayAsync(cancellationToken);
 
                     return output.OutputToFile ? output.OutputFile.Path : ((JTokenWriter)writer).Token.ToString();
@@ -113,7 +114,7 @@ namespace Frends.Community.Odbc
         }
 
         /// <summary>
-        /// Write query results to csv string or file
+        /// Write query results to csv string or file.
         /// </summary>
         /// <param name="command"></param>
         /// <param name="output"></param>
@@ -121,7 +122,7 @@ namespace Frends.Community.Odbc
         /// <returns></returns>
         public static async Task<string> ToCsvAsync(this OdbcCommand command, OutputProperties output, CancellationToken cancellationToken)
         {
-            // utf-8 as default encoding
+            // UTF-8 as default encoding.
             var encoding = string.IsNullOrWhiteSpace(output.OutputFile?.Encoding) ? Encoding.UTF8 : Encoding.GetEncoding(output.OutputFile.Encoding);
 
             using (var reader = await command.ExecuteReaderAsync(cancellationToken))
@@ -131,7 +132,7 @@ namespace Frends.Community.Odbc
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
-                    // write csv header if necessary
+                    // Write csv header if necessary.
                     if (!headerWritten && output.CsvOutput.IncludeHeaders)
                     {
                         var fieldNames = new object[reader.FieldCount];
@@ -150,7 +151,7 @@ namespace Frends.Community.Odbc
                     }
                     await w.WriteLineAsync(string.Join(output.CsvOutput.CsvSeparator, fieldValues));
 
-                    // write only complete rows, but stop if process was terminated
+                    // Write only complete rows, but stop if process was terminated.
                     cancellationToken.ThrowIfCancellationRequested();
                 }
 

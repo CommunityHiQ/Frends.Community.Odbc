@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using System;
 using System.Threading;
 
 namespace Frends.Community.Odbc.Tests

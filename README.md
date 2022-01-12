@@ -2,7 +2,7 @@
 
 This task requires ODBC drivers to be istalled on FRENDS Agent machine. 
 
-[![Actions Status](https://github.com/CommunityHiQ/Frends.Community.Odbc/workflows/PackAndPushAfterMerge/badge.svg)](https://github.com/CommunityHiQ/Frends.Community.Odbc/actions) ![MyGet](https://img.shields.io/myget/frends-community/v/Frends.Community.Odbc) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+![MyGet](https://img.shields.io/myget/frends-community/v/Frends.Community.Odbc) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 - [Installing](#installing)
 - [Tasks](#tasks)
@@ -85,19 +85,19 @@ To fetch result use syntax:
 
 # Building
 
-Clone a copy of the repository
+Clone a copy of the repository.
 
 `git clone https://github.com/CommunityHiQ/Frends.Community.Odbc.git`
 
-Rebuild the project
+Build the project.
 
 `dotnet build`
 
-Run tests
+Run tests.
 
 `dotnet test`
 
-Create a NuGet package
+Create a NuGet package.
 
 `dotnet pack --configuration Release`
 
