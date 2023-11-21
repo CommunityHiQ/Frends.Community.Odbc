@@ -23,39 +23,49 @@ namespace Frends.Community.Odbc
         /// <exception cref="Exception"></exception>
         public static async Task<dynamic> Query([PropertyTab] QueryParameters queryParameters, [PropertyTab] OutputProperties output, [PropertyTab] ConnectionInformation options, CancellationToken cancellationToken)
         {
-            using (var connection = new OdbcConnection(options.ConnectionString))
+            try
             {
-                await connection.OpenAsync(cancellationToken);
-                cancellationToken.ThrowIfCancellationRequested();
-
-                using (var command = connection.CreateCommand())
+                using (var connection = new OdbcConnection(options.ConnectionString))
                 {
-                    command.CommandTimeout = options.TimeoutSeconds;
-                    command.CommandText = queryParameters.Query;
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.AddRange(queryParameters.ParametersInOrder.Select(x => new OdbcParameter { Value = x.Value }).ToArray());
+                    await connection.OpenAsync(cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
 
-                    string queryResult;
-
-                    switch (output.ReturnType)
+                    using (var command = connection.CreateCommand())
                     {
-                        case QueryReturnType.Xml:
-                            queryResult = await command.ToXmlAsync(output, cancellationToken);
-                            break;
-                        case QueryReturnType.Json:
-                            queryResult = await command.ToJsonAsync(output, cancellationToken);
-                            break;
-                        case QueryReturnType.Csv:
-                            queryResult = await command.ToCsvAsync(output, cancellationToken);
-                            break;
-                        default:
-                            throw new ArgumentException("Task 'Return Type' was invalid! Check task properties.");
-                    }
+                        command.CommandTimeout = options.TimeoutSeconds;
+                        command.CommandText = queryParameters.Query;
+                        command.CommandType = CommandType.Text;
+                        command.Parameters.AddRange(queryParameters.ParametersInOrder.Select(x => new OdbcParameter { Value = x.Value }).ToArray());
 
-                    return new Output { Result = queryResult };
+                        string queryResult;
+
+                        switch (output.ReturnType)
+                        {
+                            case QueryReturnType.Xml:
+                                queryResult = await command.ToXmlAsync(output, cancellationToken);
+                                break;
+                            case QueryReturnType.Json:
+                                queryResult = await command.ToJsonAsync(output, cancellationToken);
+                                break;
+                            case QueryReturnType.Csv:
+                                queryResult = await command.ToCsvAsync(output, cancellationToken);
+                                break;
+                            default:
+                                throw new ArgumentException("Task 'Return Type' was invalid! Check task properties.");
+                        }
+
+                        return new Output { Result = queryResult };
+                    }
                 }
             }
-
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                OdbcConnection.ReleaseObjectPool();
+            }
         }
     }
 }
