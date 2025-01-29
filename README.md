@@ -120,3 +120,4 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 | 1.0.1 | Multitargeting .net standard 2.0, .net 471 |
 | 1.0.2 | Fixed version number conflict with Newtonsoft.Json  |
 | 1.1.0 | Release ODBC object pool after Task execution  |
+| 1.2.0 | Multitargeting added to .NET6 and .NET8. System.ComponentModel.Annotations updated to 5.0.0 and System.Data.Odbc updated to 8.0.0 |
